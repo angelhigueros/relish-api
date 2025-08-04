@@ -70,7 +70,7 @@ describe('Photos Endpoint', () => {
     })
 
     expect(response.statusCode).toBe(200)
-    
+
     const payload = JSON.parse(response.payload)
     expect(payload.success).toBe(true)
     expect(payload.message).toBe('Photo data retrieved successfully')
@@ -94,7 +94,7 @@ describe('Photos Endpoint', () => {
     })
 
     expect(response.statusCode).toBe(400)
-    
+
     const payload = JSON.parse(response.payload)
     expect(payload.success).toBe(false)
     expect(payload.message).toContain('Invalid photo ID')
@@ -107,7 +107,7 @@ describe('Photos Endpoint', () => {
     })
 
     expect(response.statusCode).toBe(400)
-    
+
     const payload = JSON.parse(response.payload)
     expect(payload.success).toBe(false)
     expect(payload.message).toContain('Invalid photo ID')
@@ -126,7 +126,7 @@ describe('Photos Endpoint', () => {
     })
 
     expect(response.statusCode).toBe(404)
-    
+
     const payload = JSON.parse(response.payload)
     expect(payload.success).toBe(false)
     expect(payload.message).toBe('Photo not found')
@@ -193,187 +193,187 @@ describe('Photos Endpoint', () => {
         })
     })
 
-         test('GET /api/v1/photos should return all photos when no filters', async () => {
-       const response = await server.inject({
-         method: 'GET',
-         url: '/api/v1/photos'
-       })
+    test('GET /api/v1/photos should return all photos when no filters', async () => {
+      const response = await server.inject({
+        method: 'GET',
+        url: '/api/v1/photos'
+      })
 
-       expect(response.statusCode).toBe(200)
-       
-       const payload = JSON.parse(response.payload)
-       expect(payload.success).toBe(true)
-       expect(payload.data).toHaveProperty('photos')
-       expect(payload.data).toHaveProperty('pagination')
-       expect(payload.data.photos).toBeInstanceOf(Array)
-       expect(payload.data.photos.length).toBeGreaterThan(0)
-       expect(payload.data.photos[0]).toHaveProperty('id')
-       expect(payload.data.photos[0]).toHaveProperty('album')
-       expect(payload.data.photos[0].album).toHaveProperty('user')
-     })
+      expect(response.statusCode).toBe(200)
 
-         test('GET /api/v1/photos?title=repudiandae should filter by title', async () => {
-       const response = await server.inject({
-         method: 'GET',
-         url: '/api/v1/photos?title=repudiandae'
-       })
+      const payload = JSON.parse(response.payload)
+      expect(payload.success).toBe(true)
+      expect(payload.data).toHaveProperty('photos')
+      expect(payload.data).toHaveProperty('pagination')
+      expect(payload.data.photos).toBeInstanceOf(Array)
+      expect(payload.data.photos.length).toBeGreaterThan(0)
+      expect(payload.data.photos[0]).toHaveProperty('id')
+      expect(payload.data.photos[0]).toHaveProperty('album')
+      expect(payload.data.photos[0].album).toHaveProperty('user')
+    })
 
-       expect(response.statusCode).toBe(200)
-       
-       const payload = JSON.parse(response.payload)
-       expect(payload.success).toBe(true)
-       expect(payload.message).toContain('Found')
-       expect(payload.data).toHaveProperty('photos')
-       expect(payload.data).toHaveProperty('pagination')
-       
-       // Check that all returned photos contain the filter term
-       payload.data.photos.forEach(photo => {
-         expect(photo.title.toLowerCase()).toContain('repudiandae')
-       })
-     })
+    test('GET /api/v1/photos?title=repudiandae should filter by title', async () => {
+      const response = await server.inject({
+        method: 'GET',
+        url: '/api/v1/photos?title=repudiandae'
+      })
 
-         test('GET /api/v1/photos?album.title=quidem should filter by album title', async () => {
-       const response = await server.inject({
-         method: 'GET',
-         url: '/api/v1/photos?album.title=quidem'
-       })
+      expect(response.statusCode).toBe(200)
 
-       expect(response.statusCode).toBe(200)
-       
-       const payload = JSON.parse(response.payload)
-       expect(payload.success).toBe(true)
-       expect(payload.message).toContain('Found')
-       expect(payload.data).toHaveProperty('photos')
-       expect(payload.data).toHaveProperty('pagination')
-       
-       // Check that all returned photos have albums containing the filter term
-       payload.data.photos.forEach(photo => {
-         expect(photo.album.title.toLowerCase()).toContain('quidem')
-       })
-     })
+      const payload = JSON.parse(response.payload)
+      expect(payload.success).toBe(true)
+      expect(payload.message).toContain('Found')
+      expect(payload.data).toHaveProperty('photos')
+      expect(payload.data).toHaveProperty('pagination')
 
-     test('GET /api/v1/photos?album.user.email=Sincere@april.biz should filter by user email', async () => {
-       const response = await server.inject({
-         method: 'GET',
-         url: '/api/v1/photos?album.user.email=Sincere@april.biz'
-       })
+      // Check that all returned photos contain the filter term
+      payload.data.photos.forEach(photo => {
+        expect(photo.title.toLowerCase()).toContain('repudiandae')
+      })
+    })
 
-       expect(response.statusCode).toBe(200)
-       
-       const payload = JSON.parse(response.payload)
-       expect(payload.success).toBe(true)
-       expect(payload.message).toContain('Found')
-       expect(payload.data).toHaveProperty('photos')
-       expect(payload.data).toHaveProperty('pagination')
-       
-       // Check that all returned photos have the specified user email
-       payload.data.photos.forEach(photo => {
-         expect(photo.album.user.email).toBe('Sincere@april.biz')
-       })
-     })
+    test('GET /api/v1/photos?album.title=quidem should filter by album title', async () => {
+      const response = await server.inject({
+        method: 'GET',
+        url: '/api/v1/photos?album.title=quidem'
+      })
 
-     test('GET /api/v1/photos?album.title=quidem&title=repudiandae should apply multiple filters', async () => {
-       const response = await server.inject({
-         method: 'GET',
-         url: '/api/v1/photos?album.title=quidem&title=repudiandae'
-       })
+      expect(response.statusCode).toBe(200)
 
-       expect(response.statusCode).toBe(200)
-       
-       const payload = JSON.parse(response.payload)
-       expect(payload.success).toBe(true)
-       expect(payload.message).toContain('Found')
-       expect(payload.data).toHaveProperty('photos')
-       expect(payload.data).toHaveProperty('pagination')
-       
-       // Check that all returned photos match both filters
-       payload.data.photos.forEach(photo => {
-         expect(photo.title.toLowerCase()).toContain('repudiandae')
-         expect(photo.album.title.toLowerCase()).toContain('quidem')
-       })
-     })
+      const payload = JSON.parse(response.payload)
+      expect(payload.success).toBe(true)
+      expect(payload.message).toContain('Found')
+      expect(payload.data).toHaveProperty('photos')
+      expect(payload.data).toHaveProperty('pagination')
 
-     // Pagination tests
-     test('GET /api/v1/photos?limit=5 should return limited results', async () => {
-       const response = await server.inject({
-         method: 'GET',
-         url: '/api/v1/photos?limit=5'
-       })
+      // Check that all returned photos have albums containing the filter term
+      payload.data.photos.forEach(photo => {
+        expect(photo.album.title.toLowerCase()).toContain('quidem')
+      })
+    })
 
-       expect(response.statusCode).toBe(200)
-       
-       const payload = JSON.parse(response.payload)
-       expect(payload.success).toBe(true)
-       expect(payload.data).toHaveProperty('photos')
-       expect(payload.data).toHaveProperty('pagination')
-       expect(payload.data.photos.length).toBeLessThanOrEqual(5)
-       expect(payload.data.pagination.limit).toBe(5)
-       expect(payload.data.pagination.offset).toBe(0)
-     })
+    test('GET /api/v1/photos?album.user.email=Sincere@april.biz should filter by user email', async () => {
+      const response = await server.inject({
+        method: 'GET',
+        url: '/api/v1/photos?album.user.email=Sincere@april.biz'
+      })
 
-     test('GET /api/v1/photos?limit=10&offset=5 should return paginated results', async () => {
-       const response = await server.inject({
-         method: 'GET',
-         url: '/api/v1/photos?limit=10&offset=5'
-       })
+      expect(response.statusCode).toBe(200)
 
-       expect(response.statusCode).toBe(200)
-       
-       const payload = JSON.parse(response.payload)
-       expect(payload.success).toBe(true)
-       expect(payload.data).toHaveProperty('photos')
-       expect(payload.data).toHaveProperty('pagination')
-       expect(payload.data.photos.length).toBeLessThanOrEqual(10)
-       expect(payload.data.pagination.limit).toBe(10)
-       expect(payload.data.pagination.offset).toBe(5)
-     })
+      const payload = JSON.parse(response.payload)
+      expect(payload.success).toBe(true)
+      expect(payload.message).toContain('Found')
+      expect(payload.data).toHaveProperty('photos')
+      expect(payload.data).toHaveProperty('pagination')
 
-     test('GET /api/v1/photos?album.title=quidem&limit=10&offset=50 should apply filters with pagination', async () => {
-       const response = await server.inject({
-         method: 'GET',
-         url: '/api/v1/photos?album.title=quidem&limit=10&offset=50'
-       })
+      // Check that all returned photos have the specified user email
+      payload.data.photos.forEach(photo => {
+        expect(photo.album.user.email).toBe('Sincere@april.biz')
+      })
+    })
 
-       expect(response.statusCode).toBe(200)
-       
-       const payload = JSON.parse(response.payload)
-       expect(payload.success).toBe(true)
-       expect(payload.data).toHaveProperty('photos')
-       expect(payload.data).toHaveProperty('pagination')
-       expect(payload.data.photos.length).toBeLessThanOrEqual(10)
-       expect(payload.data.pagination.limit).toBe(10)
-       expect(payload.data.pagination.offset).toBe(50)
-       
-       // Check that all returned photos have albums containing the filter term
-       payload.data.photos.forEach(photo => {
-         expect(photo.album.title.toLowerCase()).toContain('quidem')
-       })
-     })
+    test('GET /api/v1/photos?album.title=quidem&title=repudiandae should apply multiple filters', async () => {
+      const response = await server.inject({
+        method: 'GET',
+        url: '/api/v1/photos?album.title=quidem&title=repudiandae'
+      })
 
-     test('GET /api/v1/photos?limit=invalid should return 400', async () => {
-       const response = await server.inject({
-         method: 'GET',
-         url: '/api/v1/photos?limit=invalid'
-       })
+      expect(response.statusCode).toBe(200)
 
-       expect(response.statusCode).toBe(400)
-       
-       const payload = JSON.parse(response.payload)
-       expect(payload.success).toBe(false)
-       expect(payload.message).toContain('Invalid limit parameter')
-     })
+      const payload = JSON.parse(response.payload)
+      expect(payload.success).toBe(true)
+      expect(payload.message).toContain('Found')
+      expect(payload.data).toHaveProperty('photos')
+      expect(payload.data).toHaveProperty('pagination')
 
-     test('GET /api/v1/photos?offset=invalid should return 400', async () => {
-       const response = await server.inject({
-         method: 'GET',
-         url: '/api/v1/photos?offset=invalid'
-       })
+      // Check that all returned photos match both filters
+      payload.data.photos.forEach(photo => {
+        expect(photo.title.toLowerCase()).toContain('repudiandae')
+        expect(photo.album.title.toLowerCase()).toContain('quidem')
+      })
+    })
 
-       expect(response.statusCode).toBe(400)
-       
-       const payload = JSON.parse(response.payload)
-       expect(payload.success).toBe(false)
-       expect(payload.message).toContain('Invalid offset parameter')
-     })
+    // Pagination tests
+    test('GET /api/v1/photos?limit=5 should return limited results', async () => {
+      const response = await server.inject({
+        method: 'GET',
+        url: '/api/v1/photos?limit=5'
+      })
+
+      expect(response.statusCode).toBe(200)
+
+      const payload = JSON.parse(response.payload)
+      expect(payload.success).toBe(true)
+      expect(payload.data).toHaveProperty('photos')
+      expect(payload.data).toHaveProperty('pagination')
+      expect(payload.data.photos.length).toBeLessThanOrEqual(5)
+      expect(payload.data.pagination.limit).toBe(5)
+      expect(payload.data.pagination.offset).toBe(0)
+    })
+
+    test('GET /api/v1/photos?limit=10&offset=5 should return paginated results', async () => {
+      const response = await server.inject({
+        method: 'GET',
+        url: '/api/v1/photos?limit=10&offset=5'
+      })
+
+      expect(response.statusCode).toBe(200)
+
+      const payload = JSON.parse(response.payload)
+      expect(payload.success).toBe(true)
+      expect(payload.data).toHaveProperty('photos')
+      expect(payload.data).toHaveProperty('pagination')
+      expect(payload.data.photos.length).toBeLessThanOrEqual(10)
+      expect(payload.data.pagination.limit).toBe(10)
+      expect(payload.data.pagination.offset).toBe(5)
+    })
+
+    test('GET /api/v1/photos?album.title=quidem&limit=10&offset=50 should apply filters with pagination', async () => {
+      const response = await server.inject({
+        method: 'GET',
+        url: '/api/v1/photos?album.title=quidem&limit=10&offset=50'
+      })
+
+      expect(response.statusCode).toBe(200)
+
+      const payload = JSON.parse(response.payload)
+      expect(payload.success).toBe(true)
+      expect(payload.data).toHaveProperty('photos')
+      expect(payload.data).toHaveProperty('pagination')
+      expect(payload.data.photos.length).toBeLessThanOrEqual(10)
+      expect(payload.data.pagination.limit).toBe(10)
+      expect(payload.data.pagination.offset).toBe(50)
+
+      // Check that all returned photos have albums containing the filter term
+      payload.data.photos.forEach(photo => {
+        expect(photo.album.title.toLowerCase()).toContain('quidem')
+      })
+    })
+
+    test('GET /api/v1/photos?limit=invalid should return 400', async () => {
+      const response = await server.inject({
+        method: 'GET',
+        url: '/api/v1/photos?limit=invalid'
+      })
+
+      expect(response.statusCode).toBe(400)
+
+      const payload = JSON.parse(response.payload)
+      expect(payload.success).toBe(false)
+      expect(payload.message).toContain('Invalid limit parameter')
+    })
+
+    test('GET /api/v1/photos?offset=invalid should return 400', async () => {
+      const response = await server.inject({
+        method: 'GET',
+        url: '/api/v1/photos?offset=invalid'
+      })
+
+      expect(response.statusCode).toBe(400)
+
+      const payload = JSON.parse(response.payload)
+      expect(payload.success).toBe(false)
+      expect(payload.message).toContain('Invalid offset parameter')
+    })
   })
-}) 
+})

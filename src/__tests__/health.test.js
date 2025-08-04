@@ -18,7 +18,7 @@ describe('Health Endpoint', () => {
     })
 
     expect(response.statusCode).toBe(200)
-    
+
     const payload = JSON.parse(response.payload)
     expect(payload.success).toBe(true)
     expect(payload.message).toBe('API is healthy')
@@ -36,10 +36,10 @@ describe('Health Endpoint', () => {
     })
 
     expect(response.statusCode).toBe(200)
-    
+
     const payload = JSON.parse(response.payload)
     expect(payload.message).toBe('Welcome to Relish API')
     expect(payload.version).toBe('1.0.0')
     expect(payload.documentation).toContain('/documentation')
   })
-}) 
+})

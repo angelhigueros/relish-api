@@ -1,6 +1,5 @@
 const config = require('../config')
 
-
 const swaggerConfig = {
   swagger: {
     info: {
@@ -31,4 +30,4 @@ const swaggerConfig = {
   }
 }
 
-module.exports = swaggerConfig 
+module.exports = swaggerConfig

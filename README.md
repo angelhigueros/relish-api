@@ -325,5 +325,34 @@ The project includes GitHub Actions workflows for automated testing and deployme
 - **Trigger**: Push to `main` or `master` branch
 - **Process**: 
   1. Run tests on Node.js 18.x and 20.x
-  2. Execute linting checks
-  3. Deploy to Railway if tests pass
+      2. Execute linting checks
+    3. Deploy to Railway if tests pass
+
+### Manual Deployment
+
+#### Railway
+1. Install Railway CLI: `npm i -g @railway/cli`
+2. Login: `railway login`
+3. Link project: `railway link`
+4. Deploy: `railway up`
+
+### Environment Variables for Production
+
+Set these environment variables in your deployment platform:
+
+```env
+NODE_ENV=production
+PORT=10000
+HOST=0.0.0.0
+API_PREFIX=/api/v1
+```
+
+### Deployment Platforms
+
+| Platform | Pros | Cons | Best For |
+|----------|------|------|----------|
+| **Railway** | Easy setup, auto-deploy, SSL | Limited free tier | Prototypes, small projects |
+| **Render** | Generous free tier, easy setup | Limited customization | Small to medium projects |
+| **Heroku** | Very stable, great docs | No free tier | Production apps |
+| **DigitalOcean** | Good pricing, reliable | Manual setup | Medium projects |
+| **AWS** | Highly scalable, robust | Complex setup | Enterprise projects |

@@ -5,19 +5,21 @@ const swaggerConfig = require('./plugins/swagger')
 
 const createServer = async () => {
   const server = fastify({
-    logger: config.environment === 'development' ? {
-      level: 'info',
-      transport: {
-        target: 'pino-pretty',
-        options: {
-          colorize: true,
-          translateTime: 'HH:MM:ss Z',
-          ignore: 'pid,hostname'
+    logger: config.environment === 'development'
+      ? {
+        level: 'info',
+        transport: {
+          target: 'pino-pretty',
+          options: {
+            colorize: true,
+            translateTime: 'HH:MM:ss Z',
+            ignore: 'pid,hostname'
+          }
         }
       }
-    } : {
-      level: 'error'
-    }
+      : {
+        level: 'error'
+      }
   })
 
   await server.register(require('@fastify/cors'), {
@@ -53,7 +55,7 @@ const createServer = async () => {
 
   await server.register(registerRoutes, { prefix: config.api.prefix })
 
-  server.get('/', async (request, reply) => {
+  server.get('/', async (request, _reply) => {
     return {
       message: 'Welcome to Relish API',
       version: '1.0.0',
@@ -63,10 +65,10 @@ const createServer = async () => {
 
   server.setErrorHandler((error, request, reply) => {
     server.log.error(error)
-    
+
     const statusCode = error.statusCode || 500
     const message = error.message || 'Internal Server Error'
-    
+
     reply.status(statusCode).send({
       success: false,
       message,
@@ -80,7 +82,7 @@ const createServer = async () => {
 const start = async () => {
   try {
     const server = await createServer()
-    
+
     await server.listen({
       port: config.server.port,
       host: config.server.host
@@ -99,4 +101,4 @@ if (require.main === module) {
   start()
 }
 
-module.exports = { createServer, start } 
+module.exports = { createServer, start }

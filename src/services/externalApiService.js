@@ -2,14 +2,13 @@ const axios = require('axios')
 
 const BASE_URL = 'https://jsonplaceholder.typicode.com'
 
-
 class ExternalApiService {
   /**
    * Get user by ID
    * @param {number} userId - User ID
    * @returns {Promise<Object>} User data
    */
-  async getUserById(userId) {
+  async getUserById (userId) {
     try {
       const response = await axios.get(`${BASE_URL}/users/${userId}`)
       return response.data
@@ -23,7 +22,7 @@ class ExternalApiService {
    * @param {number} albumId - Album ID
    * @returns {Promise<Object>} Album data
    */
-  async getAlbumById(albumId) {
+  async getAlbumById (albumId) {
     try {
       const response = await axios.get(`${BASE_URL}/albums/${albumId}`)
       return response.data
@@ -37,7 +36,7 @@ class ExternalApiService {
    * @param {number} photoId - Photo ID
    * @returns {Promise<Object>} Photo data
    */
-  async getPhotoById(photoId) {
+  async getPhotoById (photoId) {
     try {
       const response = await axios.get(`${BASE_URL}/photos/${photoId}`)
       return response.data
@@ -50,7 +49,7 @@ class ExternalApiService {
    * Get all photos
    * @returns {Promise<Array>} All photos data
    */
-  async getAllPhotos() {
+  async getAllPhotos () {
     try {
       const response = await axios.get(`${BASE_URL}/photos`)
       return response.data
@@ -63,7 +62,7 @@ class ExternalApiService {
    * Get all albums
    * @returns {Promise<Array>} All albums data
    */
-  async getAllAlbums() {
+  async getAllAlbums () {
     try {
       const response = await axios.get(`${BASE_URL}/albums`)
       return response.data
@@ -76,7 +75,7 @@ class ExternalApiService {
    * Get all users
    * @returns {Promise<Array>} All users data
    */
-  async getAllUsers() {
+  async getAllUsers () {
     try {
       const response = await axios.get(`${BASE_URL}/users`)
       return response.data
@@ -90,14 +89,14 @@ class ExternalApiService {
    * @param {number} photoId - Photo ID
    * @returns {Promise<Object>} Enriched photo data
    */
-  async getEnrichedPhoto(photoId) {
+  async getEnrichedPhoto (photoId) {
     try {
       const photo = await this.getPhotoById(photoId)
-      
+
       const album = await this.getAlbumById(photo.albumId)
-      
+
       const user = await this.getUserById(album.userId)
-      
+
       return {
         id: photo.id,
         title: photo.title,
@@ -106,7 +105,7 @@ class ExternalApiService {
         album: {
           id: album.id,
           title: album.title,
-          user: user
+          user
         }
       }
     } catch (error) {
@@ -124,7 +123,7 @@ class ExternalApiService {
    * @param {number} filters.offset - Starting offset into the collection (default: 0)
    * @returns {Promise<Object>} Filtered and enriched photos with pagination info
    */
-  async getFilteredPhotos(filters = {}) {
+  async getFilteredPhotos (filters = {}) {
     try {
       const [photos, albums, users] = await Promise.all([
         this.getAllPhotos(),
@@ -139,7 +138,7 @@ class ExternalApiService {
         .map(photo => {
           const album = albumsMap.get(photo.albumId)
           if (!album) return null
-          
+
           const user = usersMap.get(album.userId)
           if (!user) return null
 
@@ -151,7 +150,7 @@ class ExternalApiService {
             album: {
               id: album.id,
               title: album.title,
-              user: user
+              user
             }
           }
         })
@@ -181,8 +180,8 @@ class ExternalApiService {
         photos: paginatedPhotos,
         pagination: {
           total: totalCount,
-          limit: limit,
-          offset: offset,
+          limit,
+          offset,
           hasNext: offset + limit < totalCount,
           hasPrevious: offset > 0
         }
@@ -193,4 +192,4 @@ class ExternalApiService {
   }
 }
 
-module.exports = new ExternalApiService() 
+module.exports = new ExternalApiService()

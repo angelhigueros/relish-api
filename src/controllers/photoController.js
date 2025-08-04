@@ -1,7 +1,6 @@
 const { success, error } = require('../utils/response')
 const externalApiService = require('../services/externalApiService')
 
-
 const photoController = {
   /**
    * Get enriched photo with album and user information
@@ -18,15 +17,15 @@ const photoController = {
       }
 
       const enrichedPhoto = await externalApiService.getEnrichedPhoto(photoId)
-      
+
       return reply.send(success(enrichedPhoto, 'Photo data retrieved successfully'))
     } catch (err) {
       if (err.message.includes('404')) {
         return reply.status(404).send(error('Photo not found', 404))
       }
-      
+
       request.log.error(err)
-      
+
       return reply.status(500).send(error('Failed to retrieve photo data', 500))
     }
   },
@@ -38,9 +37,9 @@ const photoController = {
    */
   getFilteredPhotos: async (request, reply) => {
     try {
-      const { 
-        title, 
-        'album.title': albumTitle, 
+      const {
+        title,
+        'album.title': albumTitle,
         'album.user.email': userEmail,
         limit,
         offset
@@ -68,21 +67,21 @@ const photoController = {
       }
 
       const result = await externalApiService.getFilteredPhotos(filters)
-      
-      const message = Object.keys(filters).length > 0 
+
+      const message = Object.keys(filters).length > 0
         ? `Found ${result.pagination.total} photos matching the specified filters`
         : `Retrieved ${result.pagination.total} photos`
-      
+
       return reply.send(success({
         photos: result.photos,
         pagination: result.pagination
       }, message))
     } catch (err) {
       request.log.error(err)
-      
+
       return reply.status(500).send(error('Failed to retrieve filtered photos', 500))
     }
   }
 }
 
-module.exports = photoController 
+module.exports = photoController

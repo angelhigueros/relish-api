@@ -1,6 +1,6 @@
 const healthController = require('../controllers/healthController')
 
-const healthRoutes = async (fastify, options) => {
+const healthRoutes = async (fastify, _options) => {
   fastify.get('/', {
     schema: {
       description: 'Health check endpoint',
@@ -31,4 +31,4 @@ const healthRoutes = async (fastify, options) => {
   }, healthController.getHealth)
 }
 
-module.exports = healthRoutes 
+module.exports = healthRoutes

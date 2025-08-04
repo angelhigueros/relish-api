@@ -1,4 +1,3 @@
-
 /**
  * Creates a success response
  * @param {Object} data - Response data
@@ -6,7 +5,7 @@
  * @param {number} statusCode - HTTP status code
  * @returns {Object} Formatted response
  */
-const success = (data = null, message = 'Success', statusCode = 200) => {
+const success = (data = null, message = 'Success', _statusCode = 200) => {
   return {
     success: true,
     message,
@@ -22,7 +21,7 @@ const success = (data = null, message = 'Success', statusCode = 200) => {
  * @param {Object} errors - Additional error details
  * @returns {Object} Formatted error response
  */
-const error = (message = 'Internal Server Error', statusCode = 500, errors = null) => {
+const error = (message = 'Internal Server Error', _statusCode = 500, errors = null) => {
   return {
     success: false,
     message,
@@ -34,4 +33,4 @@ const error = (message = 'Internal Server Error', statusCode = 500, errors = nul
 module.exports = {
   success,
   error
-} 
+}

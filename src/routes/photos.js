@@ -3,7 +3,7 @@ const photoController = require('../controllers/photoController')
 /**
  * Photo routes
  */
-const photoRoutes = async (fastify, options) => {
+const photoRoutes = async (fastify, _options) => {
   // Get filtered photos
   fastify.get('/', {
     schema: {
@@ -238,4 +238,4 @@ const photoRoutes = async (fastify, options) => {
   }, photoController.getEnrichedPhoto)
 }
 
-module.exports = photoRoutes 
+module.exports = photoRoutes

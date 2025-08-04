@@ -1,6 +1,5 @@
 const { success } = require('../utils/response')
 
-
 const healthController = {
   /**
    * Get health status
@@ -20,4 +19,4 @@ const healthController = {
   }
 }
 
-module.exports = healthController 
+module.exports = healthController

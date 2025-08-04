@@ -7,8 +7,8 @@ const photoRoutes = require('./photos')
  */
 const registerRoutes = async (fastify) => {
   await fastify.register(healthRoutes, { prefix: '/health' })
-  
+
   await fastify.register(photoRoutes, { prefix: '/photos' })
 }
 
-module.exports = registerRoutes 
+module.exports = registerRoutes
