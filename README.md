@@ -314,3 +314,16 @@ Common HTTP status codes:
 - `404` - Resource not found
 - `500` - Internal server error
 
+## Deployment
+
+### Automated Deployment with GitHub Actions
+
+The project includes GitHub Actions workflows for automated testing and deployment:
+
+#### Railway Deployment
+- **Workflow**: `.github/workflows/deploy.yml`
+- **Trigger**: Push to `main` or `master` branch
+- **Process**: 
+  1. Run tests on Node.js 18.x and 20.x
+  2. Execute linting checks
+  3. Deploy to Railway if tests pass
