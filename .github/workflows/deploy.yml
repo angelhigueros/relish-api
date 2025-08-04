@@ -1,4 +1,4 @@
-name: Deploy to Railway
+name: CI/CD Pipeline
 
 on:
   push:
@@ -35,7 +35,7 @@ jobs:
     - name: Run tests with coverage
       run: npm test -- --coverage
 
-  deploy:
+  build:
     needs: test
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
@@ -55,8 +55,5 @@ jobs:
     - name: Run build check
       run: npm run lint
     
-    - name: Deploy to Railway
-      uses: railway/deploy@v1
-      with:
-        service: relish-api
-        token: ${{ secrets.RAILWAY_TOKEN }} 
+    - name: Build successful
+      run: echo "✅ Build successful! Ready for deployment." 
