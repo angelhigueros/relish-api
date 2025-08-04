@@ -62,7 +62,7 @@ relish-api/
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/angelhigueros/relish-api
    cd relish-api
    ```
 
@@ -318,6 +318,9 @@ Common HTTP status codes:
 
 ### Automated Deployment with GitHub Actions
 
+<img width="976" height="397" alt="image" src="https://github.com/user-attachments/assets/3d105504-96ea-43dc-b253-f22f9aef7dda" />
+
+
 The project includes GitHub Actions workflows for automated testing and deployment:
 
 #### Railway Deployment
@@ -328,31 +331,5 @@ The project includes GitHub Actions workflows for automated testing and deployme
       2. Execute linting checks
     3. Deploy to Railway if tests pass
 
-### Manual Deployment
+<img width="324" height="180" alt="image" src="https://github.com/user-attachments/assets/b4686451-f236-4736-bb82-49013a9c0bb2" />
 
-#### Railway
-1. Install Railway CLI: `npm i -g @railway/cli`
-2. Login: `railway login`
-3. Link project: `railway link`
-4. Deploy: `railway up`
-
-### Environment Variables for Production
-
-Set these environment variables in your deployment platform:
-
-```env
-NODE_ENV=production
-PORT=10000
-HOST=0.0.0.0
-API_PREFIX=/api/v1
-```
-
-### Deployment Platforms
-
-| Platform | Pros | Cons | Best For |
-|----------|------|------|----------|
-| **Railway** | Easy setup, auto-deploy, SSL | Limited free tier | Prototypes, small projects |
-| **Render** | Generous free tier, easy setup | Limited customization | Small to medium projects |
-| **Heroku** | Very stable, great docs | No free tier | Production apps |
-| **DigitalOcean** | Good pricing, reliable | Manual setup | Medium projects |
-| **AWS** | Highly scalable, robust | Complex setup | Enterprise projects |
