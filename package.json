@@ -1,0 +1,39 @@
+{
+  "name": "relish-api",
+  "version": "1.0.0",
+  "description": "REST API template using Fastify with best practices",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "test": "jest",
+    "lint": "eslint src/",
+    "lint:fix": "eslint src/ --fix"
+  },
+  "keywords": ["fastify", "rest-api", "nodejs", "swagger"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "fastify": "^4.24.3",
+    "@fastify/swagger": "^8.12.0",
+    "@fastify/swagger-ui": "^2.1.0",
+    "@fastify/cors": "^8.4.0",
+    "@fastify/helmet": "^10.1.1",
+    "@fastify/rate-limit": "^8.0.0",
+    "dotenv": "^16.3.1",
+    "axios": "^1.6.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1",
+    "jest": "^29.7.0",
+    "eslint": "^8.54.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.29.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^6.1.1",
+    "pino-pretty": "^10.2.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+} 
